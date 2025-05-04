@@ -1,9 +1,9 @@
 <?php
     // Sanitização de dados
-    $nome = htmlspecialchars($_POST['nome']);
-    $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-    $telefone = htmlspecialchars($_POST['telefone']);
-    $mensagem = htmlspecialchars($_POST['mensagem']);
+    $nome = addslashes($_POST['nome']);
+    $email = addslashes($_POST['email']);
+    $telefone = addslashes($_POST['telefone']);
+    $mensagem = addslashes($_POST['mensagem']);
 
     // Configuração do e-mail
     $para = "rafael.lumertz_webber@hotmail.com.br";
