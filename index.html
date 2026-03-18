@@ -1,176 +1,835 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <!--google fonts-->
+    <title>Rafael Lumertz Webber | Eng. Computação & Dev</title>
+    <meta name="description" content="Portfólio de Rafael Lumertz Webber - Estudante de Engenharia da Computação, Desenvolvedor na Anttecipe. Python, IA e Robótica.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-<!--google fonts-->
-<!--bootstrap icons--> 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-<!--bootstrap icons--> 
-<title>Portifólio</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #060608;
+            --bg-card: #0d0d10;
+            --bg-elevated: #12121a;
+            --text: #e8e8ed;
+            --text-muted: #8b8b9e;
+            --accent: #00f5d4;
+            --accent-secondary: #7b2cbf;
+            --accent-tertiary: #9d4edd;
+            --glow: rgba(0, 245, 212, 0.4);
+            --glow-purple: rgba(157, 78, 221, 0.4);
+            --font-main: 'Outfit', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-main); background: var(--bg); color: var(--text); line-height: 1.7; overflow-x: hidden; cursor: none; }
+        body.using-mouse { cursor: auto; }
+
+        /* ========== NAV ========== */
+        .nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            padding: 1.25rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: linear-gradient(180deg, rgba(6,6,8,0.95) 0%, transparent 100%);
+            backdrop-filter: blur(12px);
+        }
+        .nav-logo { font-size: 1.5rem; font-weight: 800; color: var(--text); text-decoration: none; letter-spacing: -0.02em; }
+        .nav-logo span { color: var(--accent); }
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent); }
+        .nav-toggle { display: none; flex-direction: column; gap: 6px; background: none; border: none; cursor: pointer; }
+        .nav-toggle span { width: 24px; height: 2px; background: var(--text); border-radius: 2px; }
+
+        /* ========== CURSOR PERSONALIZADO ========== */
+        .cursor-glow {
+            position: fixed;
+            left: 0; top: 0;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(0, 245, 212, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        .cursor-dot {
+            position: fixed;
+            left: 0; top: 0;
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 10000;
+            opacity: 0;
+            transition: opacity 0.2s, width 0.2s, height 0.2s;
+        }
+        .cursor-dot.hover { width: 40px; height: 40px; background: rgba(0, 245, 212, 0.2); }
+        @media (hover: none) {
+            .cursor-glow, .cursor-dot { display: none !important; }
+            body { cursor: auto !important; }
+        }
+
+        /* ========== HERO ========== */
+        .hero {
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding: 8rem 3rem 4rem;
+        }
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .hero-gradient {
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            top: -25%;
+            left: -25%;
+            background: radial-gradient(ellipse 50% 50% at 70% 30%, rgba(0, 245, 212, 0.08) 0%, transparent 50%),
+                        radial-gradient(ellipse 40% 40% at 20% 70%, rgba(123, 44, 191, 0.12) 0%, transparent 50%),
+                        radial-gradient(ellipse 60% 60% at 80% 80%, rgba(157, 78, 221, 0.06) 0%, transparent 50%);
+            animation: gradientShift 15s ease-in-out infinite alternate;
+        }
+        @keyframes gradientShift {
+            0% { transform: scale(1) rotate(0deg); opacity: 1; }
+            100% { transform: scale(1.1) rotate(5deg); opacity: 0.9; }
+        }
+        .particles-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+        .hero-grid {
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(0,245,212,0.03) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(0,245,212,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            width: 100%;
+        }
+        .hero-text { overflow: visible; }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(0, 245, 212, 0.08);
+            border: 1px solid rgba(0, 245, 212, 0.2);
+            border-radius: 100px;
+            font-size: 0.85rem;
+            color: var(--accent);
+            margin-bottom: 2rem;
+            font-family: var(--font-mono);
+            opacity: 0;
+            animation: fadeUp 0.8s 0.2s ease-out forwards;
+        }
+        .hero-badge::before { content: ''; width: 8px; height: 8px; background: var(--accent); border-radius: 50%; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0,245,212,0.4); } 50% { opacity: 0.8; } 75% { box-shadow: 0 0 0 8px rgba(0,245,212,0); } }
+        .hero-title {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            margin-bottom: 0.5rem;
+            opacity: 0;
+            animation: fadeUp 0.8s 0.4s ease-out forwards;
+            white-space: nowrap;
+            overflow: visible;
+            min-width: min-content;
+            width: fit-content;
+        }
+        .hero-title .typewriter {
+            color: var(--accent);
+            border-right: 3px solid var(--accent);
+            padding-right: 4px;
+            display: inline-block;
+            animation: blink 0.7s step-end infinite;
+        }
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeUp 0.8s 0.6s ease-out forwards;
+        }
+        .hero-desc {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 540px;
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            animation: fadeUp 0.8s 0.8s ease-out forwards;
+        }
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeUp 0.8s 1s ease-out forwards;
+        }
+        .btn {
+            padding: 0.9rem 1.8rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .btn-primary {
+            background: var(--accent);
+            color: var(--bg);
+            border: 2px solid var(--accent);
+        }
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--accent);
+            box-shadow: 0 0 30px var(--glow);
+        }
+        .btn-outline {
+            background: transparent;
+            color: var(--text);
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+        .btn-outline:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        .scroll-hint {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            animation: bounce 2s infinite;
+        }
+        .scroll-hint::after { content: ''; width: 1px; height: 40px; background: linear-gradient(to bottom, var(--accent), transparent); }
+        @keyframes bounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(8px); } }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* ========== CONTAINER ========== */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+        .section { padding: 6rem 0; }
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 3rem;
+        }
+        .section-title .num {
+            color: var(--accent);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            margin-right: 0.75rem;
+        }
+
+        /* ========== SOBRE ========== */
+        .sobre .layout {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+        .sobre-text h3 { font-size: 1.5rem; margin-bottom: 1rem; }
+        .sobre-text p { color: var(--text-muted); margin-bottom: 1rem; }
+        .sobre-text .highlight { color: var(--accent); }
+        .sobre-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .meta-item {
+            padding: 0.75rem 1.25rem;
+            background: var(--bg-card);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 8px;
+        }
+        .meta-item strong { color: var(--accent); display: block; font-size: 0.85rem; margin-bottom: 0.25rem; }
+        .sobre-code {
+            background: var(--bg-card);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 1.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            overflow-x: auto;
+        }
+        .sobre-code .kw { color: var(--accent-secondary); }
+        .sobre-code .str { color: var(--accent); }
+        .sobre-code .prop { color: #ff79c6; }
+        .sobre-visual {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        .sobre-visual .sobre-code { width: 100%; }
+        .sobre-photo {
+            position: relative;
+            margin-top: 3.5rem;
+            animation: float 4s ease-in-out infinite;
+        }
+        .sobre-photo::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 220px;
+            height: 220px;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, rgba(0,245,212,0.25) 0%, rgba(123,44,191,0.15) 40%, transparent 70%);
+            border-radius: 50%;
+            z-index: -1;
+            animation: pulseGlow 3s ease-in-out infinite;
+        }
+        .sobre-photo::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 280px;
+            height: 280px;
+            transform: translate(-50%, -50%);
+            border: 1px solid rgba(0,245,212,0.2);
+            border-radius: 50%;
+            z-index: -2;
+            animation: orbitRing 8s linear infinite;
+        }
+        .sobre-photo .photo-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            height: 200px;
+            transform: translate(-50%, -50%);
+            background: conic-gradient(from 0deg, transparent, rgba(0,245,212,0.3), transparent, rgba(157,78,221,0.3), transparent);
+            border-radius: 50%;
+            z-index: -3;
+            animation: spinGlow 6s linear infinite;
+            filter: blur(25px);
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+        }
+        @keyframes orbitRing {
+            0% { transform: translate(-50%, -50%) rotate(0deg); opacity: 0.4; }
+            50% { opacity: 0.8; }
+            100% { transform: translate(-50%, -50%) rotate(360deg); opacity: 0.4; }
+        }
+        @keyframes spinGlow {
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        .sobre-photo img,
+        .sobre-photo-fallback {
+            position: relative;
+            z-index: 1;
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 0 0 4px rgba(0,245,212,0.5),
+                        0 0 0 8px rgba(123,44,191,0.3),
+                        0 4px 24px rgba(0,0,0,0.4),
+                        inset 0 1px 0 rgba(255,255,255,0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .sobre-photo img:hover,
+        .sobre-photo-fallback:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 0 4px rgba(0,245,212,0.6),
+                        0 0 0 10px rgba(123,44,191,0.2),
+                        0 8px 32px rgba(0,0,0,0.4),
+                        0 0 40px rgba(0,245,212,0.2);
+        }
+        .sobre-photo-fallback {
+            display: none;
+            background: linear-gradient(135deg, var(--accent-secondary), var(--accent-tertiary));
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: rgba(255,255,255,0.9);
+        }
+        .reveal { opacity: 0; transform: translateY(40px); }
+
+        /* ========== HABILIDADES ========== */
+        .skills-layout {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+        .skill-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            opacity: 0;
+        }
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+        .skill-card:hover {
+            border-color: rgba(0, 245, 212, 0.2);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        .skill-card:hover::before { transform: scaleX(1); }
+        .skill-icon { font-size: 2rem; color: var(--accent); margin-bottom: 1rem; display: block; }
+        .skill-card h4 { font-size: 1.1rem; margin-bottom: 0.75rem; }
+        .skill-list { color: var(--text-muted); font-size: 0.9rem; line-height: 1.8; }
+        .skill-bar-wrap { margin-top: 1rem; }
+        .skill-bar { height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden; margin-top: 0.5rem; }
+        .skill-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
+            border-radius: 3px;
+            width: 0;
+            transition: width 1s ease-out;
+        }
+        .skill-card.visible .skill-bar-fill { width: var(--level, 80%); }
+
+        /* ========== EXPERIÊNCIA ========== */
+        .exp-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        .exp-item {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 2rem;
+            padding: 2rem;
+            background: var(--bg-card);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+            transition: all 0.3s;
+            opacity: 0;
+        }
+        .exp-item:hover { border-color: rgba(0, 245, 212, 0.15); }
+        .exp-date { color: var(--accent); font-family: var(--font-mono); font-size: 0.9rem; }
+        .exp-role { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.25rem; }
+        .exp-company { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.75rem; }
+        .exp-desc { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* ========== CONTATO ========== */
+        .contato .inner {
+            max-width: 600px;
+            text-align: center;
+        }
+        .contato-lead {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+        .contato-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+        }
+        .contato-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        .contato-links a:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0, 245, 212, 0.15);
+        }
+        .contato-links a span.arrow { font-size: 1.2rem; }
+
+        /* ========== FOOTER ========== */
+        .footer {
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        .footer .heart { color: var(--accent); }
+
+        /* ========== RESPONSIVO ========== */
+        .nav-links.open {
+            display: flex !important;
+            position: fixed;
+            top: 70px; left: 0; right: 0;
+            flex-direction: column;
+            padding: 2rem;
+            background: var(--bg-elevated);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        @media (max-width: 968px) {
+            .nav-links { display: none; }
+            .nav-toggle { display: flex; }
+            .hero { padding: 6rem 2rem 4rem; }
+            .hero-content { text-align: center; }
+            .sobre .layout { grid-template-columns: 1fr; }
+            .skills-layout { grid-template-columns: 1fr; }
+            .exp-item { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 600px) {
+            .nav { padding: 1rem 1.5rem; }
+            .hero { padding: 5rem 1.5rem 3rem; }
+            .hero-cta { flex-direction: column; }
+            .btn { text-align: center; }
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <div class="interface">
-            <div class="logo">
-                <a href="#">
-                    <img src="imagens/logo.png" alt="logo">
-                </a>
-            </div> <!--logo-->
+    <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+    <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+    <nav class="nav">
+        <a href="#hero" class="nav-logo">RL<span>W</span></a>
+        <ul class="nav-links">
+            <li><a href="#sobre">Sobre</a></li>
+            <li><a href="#habilidades">Habilidades</a></li>
+            <li><a href="#experiencia">Experiência</a></li>
+            <li><a href="#contato">Contato</a></li>
+        </ul>
+        <button class="nav-toggle" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
 
-            <nav class="menu-desktop">
-                <ul>
-                    <li><a href="#inicio">Inicio</a></li>
-                    <li><a href="#especialidades">Especialidades</a></li>
-                    <li><a href="#sobre">Sobre</a></li>
-                    <li><a href="#portfolio">Projetos</a></li>
-                </ul>
-            </nav>
-            <div class="rafa-contato">
-                <a href="#">
-                    <button>Contato</button>
-                </a>
-            </div>
-        </div><!--Interface-->
-    </header>
-
-    <main>
-        <section id="inicio" class="topo-do-site">
-            <div class="interface">
-                <div class="flex">
-                    <div class="txt-topo-site">
-                        <h1>TRANSFORMANDO IDEIAS EM REALIDADE DIGITAL <span>.</span></h1>
-                        <p>Criatividade e inovação andam lado a lado. Com uma combinação única de design impactante,
-                            funcionalidade intuitiva e otimização para resultados, estou pronto para criar a presença online dos seus sonhos.</p>
-                    
-                        <div class="rafa-contato">
-                            <a href="#">
-                                <button>Entre em contato</button>
-                            </a>
-
-                        </div>
-                    </div>
-                    <div class="img-topo-site">
-                        <img src="imagens/rafa.png" alt="eu">
-
-                    </div>
+    <section id="hero" class="hero">
+        <div class="hero-bg">
+            <div class="hero-gradient"></div>
+            <canvas class="particles-canvas" id="particles"></canvas>
+            <div class="hero-grid"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <div class="hero-badge">Disponível para projetos</div>
+                <h1 class="hero-title">
+                    Rafael Lumertz<span class="typewriter" id="typewriter"></span>
+                </h1>
+                <p class="hero-subtitle">Estudante de Engenharia da Computação | Dev na Anttecipe</p>
+                <p class="hero-desc">
+                    Foco em <span style="color: var(--accent);">Python</span>, 
+                    <span style="color: var(--accent-secondary);">Inteligência Artificial</span> e 
+                    <span style="color: var(--accent-tertiary);">Robótica</span>. 
+                    Construindo sistemas, automações e soluções tecnológicas em Criciúma/SC.
+                </p>
+                <div class="hero-cta">
+                    <a href="#contato" class="btn btn-primary">Entrar em Contato</a>
+                    <a href="#habilidades" class="btn btn-outline">Ver Stack</a>
                 </div>
             </div>
-        </section> <!--topo site-->
+        </div>
+        <div class="scroll-hint">Scroll</div>
+    </section>
 
-        <section id="especialidades" class="especialidades">
-                <div class="interface">
-                    <h2 class="titulo">MINHAS <span>ESPECIALIDADES.</span></h2>
-                    <div class="flex">
-                        <div class="especialidades-box">
-                            <i class="bi bi-code-square"></i>
-                            <h3>Website</h3>
-                            <p>https://github.com/rafaelwebber</p>
-                        </div><!--especialidades-box-->
-
-                        <div class="especialidades-box">
-                            <i class="bi bi-cart"></i>
-                            <h3>Loja online</h3>
-                            <p>Sociedade Esportiva Morrinhos</p>
-                        </div><!--especialidades-box-->
-
-                        <div class="especialidades-box">
-                            <i class="bi bi-journal-code"></i>
-                            <h3>Blog</h3>
-                            
-                            <p>Vamo inter</p>
-                        </div><!--especialidades-box-->
-                    </div> <!--flex-->
-                </div><!--INTERFACE-->  
-        </section> <!--especialidades-->
-        
-         <section id="sobre" class="sobre">
-            <div class="interface">
-                <div class="flex">
-                    <div class="img-sobre">
-                        <img src="imagens/PESSOARAFA.png" alt="logo.eu">
-                        
-                    </div> <!--img-sobre-->
-
-                    <div class="txt-sobre">
-                        <h2>MUITO PRAZER, <span>SOU RAFAEL LUMERTZ WEBBER</span></h2>
-                        <P>natural de Torres/RS e atualmente residente em Morrinhos do Sul/RS. Tenho 24 anos e sou estudante de Engenharia da Computação na SATC, em Criciúma/SC.
-Atualmente trabalho na Anttecipe, na área de TI, atuando remotamente com desenvolvimento de APIs, integração de sistemas e soluções tecnológicas. <br> Tenho experiência com as linguagens Python e C++, além de um breve conhecimento em Java e JavaScript. 
-Trabalho com banco de dados MySQL, realizando modelagem, consultas otimizadas e manutenção de estruturas relacionais para aplicações web e APIs. <br>
-
-Tenho conhecimento de Git e GitHub, com versionamento de código, criação e gerenciamento de branches, pull requests e colaboração em projetos open-source.
-                        </P>
-                        <P>Sempre estou aberto a críticas construtivas que contribuam para meu crescimento pessoal e profissional.
-                            Estou em busca de uma oportunidade na minha área de formação para aplicar e expandir meus conhecimentos. Acredito que, com essa vaga, podemos agregar valor mutuamente, pois sou extremamente dedicado e esforçado. Minha habilidade de colaborar e inovar no ambiente de trabalho são pontos fortes que trarão benefícios significativos para a empresa.
-                        </P>
-                        <div class="btn-social">
-                            <a href="https://www.instagram.com/rafa_webber?igsh=dG9udHgwOTJ2ZXIy&utm_source=qr"><button><i class="bi bi-instagram"></i></button></a>
-                            <a href="https://www.linkedin.com/in/rafael-lumertz-webber-0707612bb/"><button><i class="bi bi-linkedin"></i></button></a>
-                            <a href="https://github.com/rafaelwebber"><button><i class="bi bi-github"></i></button></a>
-                        </div>
-                    </div> <!--txt-sobre-->
-                </div> <!--flex-->
-            </div> <!--interface-->
-        </section><!--sobre-->
-
-          <section id="portfolio" class="portfolio">
-            <div class="interface">
-                <h2 class="titulo">MEU<span> PORTFÓLIO</span>.</h2>
-                <div class="flex">
-                    <div class="img-port" style="background-image: url(imagens/imagem.jpg);">
-                        <div class="overlay">Projeto 1</div>
-                    </div>
-                    <div class="img-port" style="background-image: url(imagens/imagem.jpg);">
-                        <div class="overlay">Projeto 2</div>
-                    </div>
-                    <div class="img-port" style="background-image: url(imagens/imagem.jpg);">
-                        <div class="overlay">Projeto 3</div>
+    <section id="sobre" class="section sobre">
+        <div class="container">
+            <h2 class="section-title"><span class="num">01</span>Sobre Mim</h2>
+            <div class="layout sobre-layout">
+                <div class="sobre-text reveal">
+                    <h3>Quem sou eu</h3>
+                    <p>
+                        Estudante de <span class="highlight">Engenharia da Computação</span> e desenvolvedor na 
+                        <span class="highlight">Anttecipe</span>, empresa de TI especializada em sistemas, 
+                        automações e soluções tecnológicas. Baseado em <strong>Criciúma/SC</strong>, 
+                        dedico-me a unir teoria acadêmica e prática profissional.
+                    </p>
+                    <p>
+                        Meu foco atual está em <strong>Python</strong>, <strong>Inteligência Artificial</strong> 
+                        e <strong>Robótica</strong>, áreas que me impulsionam a criar soluções inovadoras 
+                        e impactantes.
+                    </p>
+                    <div class="sobre-meta">
+                        <div class="meta-item"><strong>Localização</strong>Criciúma, Santa Catarina</div>
+                        <div class="meta-item"><strong>Área</strong>TI | Sistemas & Automações</div>
+                        <div class="meta-item"><strong>Foco</strong>Python · IA · Robótica</div>
                     </div>
                 </div>
-            </div> <!-- Interface -->
-          </section> <!-- portfolio  -->
-
-        <section class="formulario">
-            <div class="interface">
-                <h2 class="titulo">FALA <span>COMIGO.</span></h2>
-
-                <form method="post" action="enviar.php" netlify>
-                    <input type="text" name="nome" id="nome" placeholder="Seu nome completo:" required>
-                    <input type="text" name="email" id="email" placeholder="Seu email:" required>
-                    <input type="text" name="telefone" id="telefone" placeholder="Seu celular:">
-                    <textarea name="mensagem" id="mensagem" placeholder="Sua mensagem:" required></textarea>
-                    <div class="btn-enviar"><input type="submit" value="ENVIAR"></div>
-                </form>
-            </div> <!-- interface -->
-        </section> <!-- formulario -->
-    </main>
-
-    <footer>
-        <div class="interface">
-            <div class="line-footer">
-                <div class="flex">
-                    <div class="logo-footer">
-                        <img src="imagens/logo.png" alt="logo">
+                <div class="sobre-visual">
+                    <div class="sobre-code reveal">
+<pre><span class="kw">const</span> rafael = {
+  <span class="prop">stack</span>: [<span class="str">"Python"</span>, <span class="str">"SQL"</span>, <span class="str">"JS"</span>],
+  <span class="prop">empresa</span>: <span class="str">"Anttecipe"</span>,
+  <span class="prop">foco</span>: [<span class="str">"IA"</span>, <span class="str">"Robótica"</span>],
+};</pre>
                     </div>
-                    <div class="btn-social">
-                        <a href="https://www.instagram.com/rafa_webber?igsh=dG9udHgwOTJ2ZXIy&utm_source=qr"><button><i class="bi bi-instagram"></i></button></a>
-                        <a href="https://www.linkedin.com/in/rafael-lumertz-webber-0707612bb/"><button><i class="bi bi-linkedin"></i></button></a>
-                        <a href="https://github.com/rafaelwebber"><button><i class="bi bi-github"></i></button></a>
+                    <div class="sobre-photo reveal">
+                        <div class="photo-glow" aria-hidden="true"></div>
+                        <img src="./assets/rafael.png" alt="Rafael Lumertz Webber" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                        <div class="sobre-photo-fallback">RLW</div>
                     </div>
                 </div>
-                        
+            </div>
+        </div>
+    </section>
 
-            </div> <!--line-footer-->
+    <section id="habilidades" class="section habilidades">
+        <div class="container">
+            <h2 class="section-title"><span class="num">02</span>Habilidades</h2>
+            <div class="skills-layout">
+                <div class="skill-card" data-level="95">
+                    <span class="skill-icon">🐍</span>
+                    <h4>Forte</h4>
+                    <p class="skill-list">Python · Lógica de programação · Raciocínio algorítmico</p>
+                    <div class="skill-bar-wrap">
+                        <div class="skill-bar"><div class="skill-bar-fill" style="--level: 95%"></div></div>
+                    </div>
+                </div>
+                <div class="skill-card" data-level="70">
+                    <span class="skill-icon">⚡</span>
+                    <h4>Intermediário</h4>
+                    <p class="skill-list">JavaScript · Java · C++ · React Native</p>
+                    <div class="skill-bar-wrap">
+                        <div class="skill-bar"><div class="skill-bar-fill" style="--level: 70%"></div></div>
+                    </div>
+                </div>
+                <div class="skill-card" data-level="90">
+                    <span class="skill-icon">🗄️</span>
+                    <h4>Banco de Dados</h4>
+                    <p class="skill-list">SQL sólido · MySQL (diário) · PostgreSQL (básico)</p>
+                    <div class="skill-bar-wrap">
+                        <div class="skill-bar"><div class="skill-bar-fill" style="--level: 90%"></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-            <div class="line-footer borda">
-                <p><i class="bi bi-envelope"></i> <a href="mailto:rafael.webber09@gmail.com">rafael.webber09@gmail.com</a></p>
-            </div> <!--line-footer-->
-        </div> <!--Interface -->
+    <section id="experiencia" class="section experiencia">
+        <div class="container">
+            <h2 class="section-title"><span class="num">03</span>Experiência</h2>
+            <div class="exp-layout">
+                <div class="exp-item reveal">
+                    <div class="exp-date">Atual</div>
+                    <div>
+                        <div class="exp-role">Desenvolvedor</div>
+                        <div class="exp-company">Anttecipe — TI, Sistemas e Automações</div>
+                        <p class="exp-desc">
+                            Desenvolvimento de sistemas, automações e soluções tecnológicas. 
+                            Atuação em projetos que demandam Python, SQL e integrações.
+                        </p>
+                    </div>
+                </div>
+                <div class="exp-item reveal">
+                    <div class="exp-date">Em formação</div>
+                    <div>
+                        <div class="exp-role">Engenharia da Computação</div>
+                        <div class="exp-company">Estudante</div>
+                        <p class="exp-desc">
+                            Graduação em andamento com foco em fundamentos de computação, 
+                            programação, inteligência artificial e robótica.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contato" class="section contato">
+        <div class="container">
+            <h2 class="section-title"><span class="num">04</span>Contato</h2>
+            <div class="inner">
+                <p class="contato-lead">
+                    Projetos, oportunidades ou uma conversa sobre tecnologia? 
+                    Estou aberto a conectar.
+                </p>
+                <div class="contato-links">
+                    <a href="mailto:rafael.webber09@gmail.com"><span>rafael.webber09@gmail.com</span><span class="arrow">↗</span></a>
+                    <a href="https://www.linkedin.com/in/rafael-lumertz-webber-0707612bb/" target="_blank" rel="noopener"><span>LinkedIn</span><span class="arrow">↗</span></a>
+                    <a href="https://github.com/rafaelwebber" target="_blank" rel="noopener"><span>GitHub</span><span class="arrow">↗</span></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>© 2026 Rafael Lumertz Webber. Feito com <span class="heart">♥</span> e café.</p>
     </footer>
+
+    <script>
+        // ========== PARTICLES ==========
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initParticles();
+        }
+
+        function initParticles() {
+            particles = [];
+            const count = Math.min(80, Math.floor((canvas.width * canvas.height) / 15000));
+            for (let i = 0; i < count; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    r: Math.random() * 2 + 0.5,
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: (Math.random() - 0.5) * 0.5,
+                });
+            }
+        }
+
+        function drawParticles() {
+            if (!ctx) return;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(0, 245, 212, 0.4)';
+                ctx.fill();
+            });
+        }
+
+        function animateParticles() {
+            drawParticles();
+            requestAnimationFrame(animateParticles);
+        }
+
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+        animateParticles();
+
+        // ========== CURSOR SUAVE ==========
+        const cursorGlow = document.getElementById('cursorGlow');
+        const cursorDot = document.getElementById('cursorDot');
+        let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+        let glowX = mouseX, glowY = mouseY;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursorGlow.style.opacity = '1';
+            cursorDot.style.opacity = '1';
+        });
+
+        document.querySelectorAll('a, button').forEach(el => {
+            el.addEventListener('mouseenter', () => cursorDot.classList.add('hover'));
+            el.addEventListener('mouseleave', () => cursorDot.classList.remove('hover'));
+        });
+
+        function lerp(start, end, factor) { return start + (end - start) * factor; }
+        function animateCursor() {
+            glowX = lerp(glowX, mouseX, 0.08);
+            glowY = lerp(glowY, mouseY, 0.08);
+            if (cursorGlow) {
+                cursorGlow.style.left = glowX + 'px';
+                cursorGlow.style.top = glowY + 'px';
+            }
+            if (cursorDot) {
+                cursorDot.style.left = mouseX + 'px';
+                cursorDot.style.top = mouseY + 'px';
+            }
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        // ========== TYPEWRITER (velocidade mais lenta) ==========
+        const phrases = [' Webber', ' | Dev', ' | Python', ' | IA'];
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const el = document.getElementById('typewriter');
+
+        function typewriter() {
+            const current = phrases[phraseIndex];
+            if (isDeleting) {
+                el.textContent = current.substring(0, charIndex - 1);
+                charIndex--;
+                if (charIndex === 0) {
+                    isDeleting = false;
+                    phraseIndex = (phraseIndex + 1) % phrases.length;
+                    setTimeout(typewriter, 800);
+                    return;
+                }
+            } else {
+                el.textContent = current.substring(0, charIndex + 1);
+                charIndex++;
+                if (charIndex === current.length) {
+                    isDeleting = true;
+                    setTimeout(typewriter, 2200);
+                    return;
+                }
+            }
+            const delay = isDeleting ? 80 : 180;
+            setTimeout(typewriter, delay);
+        }
+        setTimeout(typewriter, 1800);
+
+        // ========== SCROLL REVEAL ==========
+        const reveals = document.querySelectorAll('.reveal, .skill-card, .exp-item');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+        reveals.forEach(r => observer.observe(r));
+
+        // ========== NAV MOBILE ==========
+        document.querySelector('.nav-toggle').addEventListener('click', () => {
+            document.querySelector('.nav-links').classList.toggle('open');
+        });
+    </script>
 </body>
 </html>

@@ -1,0 +1,7 @@
+COMO ADICIONAR SUA FOTO:
+
+1. Coloque sua foto nesta pasta (melhorado/assets/)
+2. Renomeie o arquivo para: rafael.png
+3. O portfólio exibirá sua foto no Hero automaticamente.
+
+Se a foto não carregar, será exibido um placeholder com as iniciais "RLW".
