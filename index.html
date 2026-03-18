@@ -467,7 +467,7 @@
         }
         .contato-links {
             display: flex;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
             justify-content: center;
             gap: 1rem;
         }
@@ -476,6 +476,7 @@
             align-items: center;
             gap: 0.5rem;
             padding: 1rem 1.5rem;
+            white-space: nowrap;
             background: var(--bg-card);
             border: 1px solid rgba(255,255,255,0.08);
             border-radius: 12px;
@@ -526,6 +527,7 @@
             .hero { padding: 5rem 1.5rem 3rem; }
             .hero-cta { flex-direction: column; }
             .btn { text-align: center; }
+            .contato-links { flex-wrap: wrap; }
         }
     </style>
 </head>
@@ -685,9 +687,9 @@
                     Estou aberto a conectar.
                 </p>
                 <div class="contato-links">
-                    <a href="mailto:rafael.webber09@gmail.com"><span>rafael.webber09@gmail.com</span><span class="arrow">↗</span></a>
-                    <a href="https://www.linkedin.com/in/rafael-lumertz-webber-0707612bb/" target="_blank" rel="noopener"><span>LinkedIn</span><span class="arrow">↗</span></a>
-                    <a href="https://github.com/rafaelwebber" target="_blank" rel="noopener"><span>GitHub</span><span class="arrow">↗</span></a>
+                    <a href="mailto:rafael.webber09@gmail.com"><span>📧 rafael.webber09@gmail.com</span><span class="arrow">↗</span></a>
+                    <a href="https://www.linkedin.com/in/rafael-lumertz-webber-0707612bb/" target="_blank" rel="noopener"><span>💼 LinkedIn</span><span class="arrow">↗</span></a>
+                    <a href="https://github.com/rafaelwebber" target="_blank" rel="noopener"><span>🐙 GitHub</span><span class="arrow">↗</span></a>
                 </div>
             </div>
         </div>
