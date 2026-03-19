@@ -141,6 +141,13 @@
             opacity: 0;
             animation: fadeUp 0.8s 0.2s ease-out forwards;
         }
+        .hero-welcome {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeUp 0.8s 0.1s ease-out forwards;
+        }
         .hero-badge::before { content: ''; width: 8px; height: 8px; background: var(--accent); border-radius: 50%; animation: pulse 2s infinite; }
         @keyframes pulse { 0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0,245,212,0.4); } 50% { opacity: 0.8; } 75% { box-shadow: 0 0 0 8px rgba(0,245,212,0); } }
         .hero-title {
@@ -502,6 +509,9 @@
             border-top: 1px solid rgba(255,255,255,0.06);
         }
         .footer .heart { color: var(--accent); }
+        .footer-thanks { font-size: 1rem; margin-bottom: 0.5rem; }
+        .footer-counter { font-size: 0.85rem; color: var(--text-muted); margin-top: 0.75rem; }
+        .footer-counter span { color: var(--accent); font-family: var(--font-mono); }
 
         /* ========== RESPONSIVO ========== */
         .nav-links.open {
@@ -555,6 +565,7 @@
         </div>
         <div class="hero-content">
             <div class="hero-text">
+                <p class="hero-welcome">Bem-vindo ao meu portfólio! 👋</p>
                 <div class="hero-badge">Disponível para projetos</div>
                 <h1 class="hero-title">
                     Rafael Lumertz<span class="typewriter" id="typewriter"></span>
@@ -696,7 +707,9 @@
     </section>
 
     <footer class="footer">
+        <p class="footer-thanks">Obrigado pela visita! 🙏</p>
         <p>© 2026 Rafael Lumertz Webber. Feito com <span class="heart">♥</span> e café.</p>
+        <p class="footer-counter">Visitas: <span id="visitCount">...</span></p>
     </footer>
 
     <script>
@@ -832,6 +845,18 @@
         document.querySelector('.nav-toggle').addEventListener('click', () => {
             document.querySelector('.nav-links').classList.toggle('open');
         });
+
+        // ========== CONTADOR DE VISITAS ==========
+        fetch('https://api.countapi.xyz/hit/rafaellwebber/portifolio')
+            .then(res => res.json())
+            .then(data => {
+                const el = document.getElementById('visitCount');
+                if (el) el.textContent = data.value.toLocaleString('pt-BR');
+            })
+            .catch(() => {
+                const el = document.getElementById('visitCount');
+                if (el) el.textContent = '—';
+            });
     </script>
 </body>
 </html>
