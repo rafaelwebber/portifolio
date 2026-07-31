@@ -4,548 +4,567 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rafael Lumertz Webber | Eng. Computação & Dev</title>
-    <meta name="description" content="Portfólio de Rafael Lumertz Webber - Estudante de Engenharia da Computação, Desenvolvedor na Anttecipe. Python, IA e Robótica.">
+    <meta name="description" content="Portfólio de Rafael Lumertz Webber — Estudante de Engenharia da Computação, Desenvolvedor na Anttecipe. Python, IA e Robótica.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #060608;
-            --bg-card: #0d0d10;
-            --bg-elevated: #12121a;
-            --text: #e8e8ed;
-            --text-muted: #8b8b9e;
-            --accent: #00f5d4;
-            --accent-secondary: #7b2cbf;
-            --accent-tertiary: #9d4edd;
-            --glow: rgba(0, 245, 212, 0.4);
-            --glow-purple: rgba(157, 78, 221, 0.4);
-            --font-main: 'Outfit', sans-serif;
-            --font-mono: 'Space Mono', monospace;
+            --bg: #f5f6f8;
+            --bg-soft: #eef1f5;
+            --bg-section: #ffffff;
+            --text: #1a2332;
+            --text-muted: #5a6578;
+            --accent: #1e3a5f;
+            --accent-soft: #3d5a80;
+            --line: #d5dbe3;
+            --font-display: 'Cormorant Garamond', Georgia, serif;
+            --font-body: 'Source Sans 3', 'Segoe UI', sans-serif;
         }
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; }
-        body { font-family: var(--font-main); background: var(--bg); color: var(--text); line-height: 1.7; overflow-x: hidden; cursor: none; }
-        body.using-mouse { cursor: auto; }
+        body {
+            font-family: var(--font-body);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+            font-weight: 400;
+            font-size: 1.05rem;
+        }
 
         /* ========== NAV ========== */
         .nav {
             position: fixed;
             top: 0; left: 0; right: 0;
-            padding: 1.25rem 3rem;
+            padding: 1.35rem 3.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
-            background: linear-gradient(180deg, rgba(6,6,8,0.95) 0%, transparent 100%);
-            backdrop-filter: blur(12px);
+            background: rgba(245, 246, 248, 0.88);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s, background 0.3s;
         }
-        .nav-logo { font-size: 1.5rem; font-weight: 800; color: var(--text); text-decoration: none; letter-spacing: -0.02em; }
-        .nav-logo span { color: var(--accent); }
-        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-        .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: color 0.3s; }
-        .nav-links a:hover { color: var(--accent); }
-        .nav-toggle { display: none; flex-direction: column; gap: 6px; background: none; border: none; cursor: pointer; }
-        .nav-toggle span { width: 24px; height: 2px; background: var(--text); border-radius: 2px; }
-
-        /* ========== CURSOR PERSONALIZADO ========== */
-        .cursor-glow {
-            position: fixed;
-            left: 0; top: 0;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(0, 245, 212, 0.15) 0%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
-            transform: translate(-50%, -50%);
-            z-index: 9999;
-            opacity: 0;
-            transition: opacity 0.2s;
+        .nav.scrolled { border-bottom-color: var(--line); }
+        .nav-logo {
+            font-family: var(--font-display);
+            font-size: 1.55rem;
+            font-weight: 600;
+            color: var(--text);
+            text-decoration: none;
+            letter-spacing: 0.04em;
         }
-        .cursor-dot {
-            position: fixed;
-            left: 0; top: 0;
-            width: 8px;
-            height: 8px;
+        .nav-logo span { color: var(--accent); font-weight: 500; }
+        .nav-links { display: flex; gap: 2.75rem; list-style: none; }
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            position: relative;
+            transition: color 0.25s;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            left: 0; bottom: -4px;
+            width: 0; height: 1px;
             background: var(--accent);
-            border-radius: 50%;
-            pointer-events: none;
-            transform: translate(-50%, -50%);
-            z-index: 10000;
-            opacity: 0;
-            transition: opacity 0.2s, width 0.2s, height 0.2s;
+            transition: width 0.3s ease;
         }
-        .cursor-dot.hover { width: 40px; height: 40px; background: rgba(0, 245, 212, 0.2); }
-        @media (hover: none) {
-            .cursor-glow, .cursor-dot { display: none !important; }
-            body { cursor: auto !important; }
+        .nav-links a:hover { color: var(--accent); }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+        }
+        .nav-toggle span {
+            width: 22px;
+            height: 1.5px;
+            background: var(--text);
         }
 
         /* ========== HERO ========== */
         .hero {
             min-height: 100vh;
             position: relative;
-            display: flex;
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
             align-items: center;
-            padding: 8rem 3rem 4rem;
+            gap: 3rem;
+            padding: 8rem 3.5rem 5rem;
+            background:
+                linear-gradient(165deg, #f8f9fb 0%, #eef1f5 45%, #e8edf3 100%);
         }
-        .hero-bg {
+        .hero::before {
+            content: '';
             position: absolute;
             inset: 0;
-            z-index: 0;
-            overflow: hidden;
-        }
-        .hero-gradient {
-            position: absolute;
-            width: 150%;
-            height: 150%;
-            top: -25%;
-            left: -25%;
-            background: radial-gradient(ellipse 50% 50% at 70% 30%, rgba(0, 245, 212, 0.08) 0%, transparent 50%),
-                        radial-gradient(ellipse 40% 40% at 20% 70%, rgba(123, 44, 191, 0.12) 0%, transparent 50%),
-                        radial-gradient(ellipse 60% 60% at 80% 80%, rgba(157, 78, 221, 0.06) 0%, transparent 50%);
-            animation: gradientShift 15s ease-in-out infinite alternate;
-        }
-        @keyframes gradientShift {
-            0% { transform: scale(1) rotate(0deg); opacity: 1; }
-            100% { transform: scale(1.1) rotate(5deg); opacity: 0.9; }
-        }
-        .particles-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
-        .hero-grid {
-            position: absolute;
-            inset: 0;
-            background-image: linear-gradient(rgba(0,245,212,0.03) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(0,245,212,0.03) 1px, transparent 1px);
-            background-size: 60px 60px;
+            background:
+                radial-gradient(ellipse 55% 45% at 85% 20%, rgba(30, 58, 95, 0.06) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 50% at 10% 80%, rgba(61, 90, 128, 0.05) 0%, transparent 65%);
+            pointer-events: none;
         }
         .hero-content {
             position: relative;
             z-index: 1;
-            max-width: 900px;
-            width: 100%;
-        }
-        .hero-text { overflow: visible; }
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: rgba(0, 245, 212, 0.08);
-            border: 1px solid rgba(0, 245, 212, 0.2);
-            border-radius: 100px;
-            font-size: 0.85rem;
-            color: var(--accent);
-            margin-bottom: 2rem;
-            font-family: var(--font-mono);
-            opacity: 0;
-            animation: fadeUp 0.8s 0.2s ease-out forwards;
+            max-width: 640px;
         }
         .hero-welcome {
-            font-size: 1.1rem;
-            color: var(--text-muted);
-            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--accent-soft);
+            font-weight: 500;
+            margin-bottom: 1.75rem;
             opacity: 0;
-            animation: fadeUp 0.8s 0.1s ease-out forwards;
+            animation: fadeUp 0.9s 0.15s ease-out forwards;
         }
-        .hero-badge::before { content: ''; width: 8px; height: 8px; background: var(--accent); border-radius: 50%; animation: pulse 2s infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0,245,212,0.4); } 50% { opacity: 0.8; } 75% { box-shadow: 0 0 0 8px rgba(0,245,212,0); } }
         .hero-title {
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
-            font-weight: 800;
-            line-height: 1.1;
-            letter-spacing: -0.03em;
-            margin-bottom: 0.5rem;
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 6.5vw, 5rem);
+            font-weight: 500;
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+            color: var(--text);
+            margin-bottom: 1.25rem;
             opacity: 0;
-            animation: fadeUp 0.8s 0.4s ease-out forwards;
-            white-space: nowrap;
-            overflow: visible;
-            min-width: min-content;
-            width: fit-content;
+            animation: fadeUp 0.9s 0.3s ease-out forwards;
         }
-        .hero-title .typewriter {
+        .hero-title em {
+            font-style: italic;
+            font-weight: 400;
             color: var(--accent);
-            border-right: 3px solid var(--accent);
-            padding-right: 4px;
-            display: inline-block;
-            animation: blink 0.7s step-end infinite;
-        }
-        @keyframes blink {
-            50% { border-color: transparent; }
         }
         .hero-subtitle {
-            font-size: 1.5rem;
+            font-size: 1.15rem;
             color: var(--text-muted);
-            font-weight: 500;
+            font-weight: 400;
             margin-bottom: 1.5rem;
+            letter-spacing: 0.01em;
             opacity: 0;
-            animation: fadeUp 0.8s 0.6s ease-out forwards;
+            animation: fadeUp 0.9s 0.45s ease-out forwards;
         }
         .hero-desc {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             color: var(--text-muted);
-            max-width: 540px;
+            max-width: 480px;
             margin-bottom: 2.5rem;
+            line-height: 1.75;
             opacity: 0;
-            animation: fadeUp 0.8s 0.8s ease-out forwards;
+            animation: fadeUp 0.9s 0.6s ease-out forwards;
         }
         .hero-cta {
             display: flex;
             gap: 1rem;
             flex-wrap: wrap;
             opacity: 0;
-            animation: fadeUp 0.8s 1s ease-out forwards;
+            animation: fadeUp 0.9s 0.75s ease-out forwards;
         }
         .btn {
-            padding: 0.9rem 1.8rem;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 0.95rem;
+            padding: 0.95rem 1.9rem;
+            font-family: var(--font-body);
+            font-weight: 500;
+            font-size: 0.9rem;
+            letter-spacing: 0.04em;
             text-decoration: none;
-            transition: all 0.3s;
+            transition: background 0.3s, color 0.3s, border-color 0.3s;
         }
         .btn-primary {
             background: var(--accent);
-            color: var(--bg);
-            border: 2px solid var(--accent);
+            color: #fff;
+            border: 1px solid var(--accent);
         }
         .btn-primary:hover {
-            background: transparent;
-            color: var(--accent);
-            box-shadow: 0 0 30px var(--glow);
+            background: var(--accent-soft);
+            border-color: var(--accent-soft);
         }
         .btn-outline {
             background: transparent;
             color: var(--text);
-            border: 2px solid rgba(255,255,255,0.2);
+            border: 1px solid var(--line);
         }
         .btn-outline:hover {
             border-color: var(--accent);
             color: var(--accent);
         }
-        .scroll-hint {
-            position: absolute;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
+        .hero-visual {
+            position: relative;
+            z-index: 1;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            gap: 0.5rem;
-            color: var(--text-muted);
-            font-size: 0.8rem;
-            animation: bounce 2s infinite;
+            opacity: 0;
+            animation: fadeIn 1.1s 0.5s ease-out forwards;
         }
-        .scroll-hint::after { content: ''; width: 1px; height: 40px; background: linear-gradient(to bottom, var(--accent), transparent); }
-        @keyframes bounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(8px); } }
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+        .hero-photo {
+            position: relative;
+            width: min(380px, 100%);
+        }
+        .hero-photo img,
+        .hero-photo-fallback {
+            width: 100%;
+            aspect-ratio: 4 / 5;
+            object-fit: cover;
+            display: block;
+            filter: grayscale(12%) contrast(1.02);
+        }
+        .hero-photo-fallback {
+            display: none;
+            background: linear-gradient(145deg, var(--accent), var(--accent-soft));
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-weight: 500;
+            color: rgba(255,255,255,0.92);
+        }
+        .hero-photo::after {
+            content: '';
+            position: absolute;
+            inset: 1.25rem -1.25rem -1.25rem 1.25rem;
+            border: 1px solid var(--line);
+            z-index: -1;
+            animation: frameReveal 1.2s 0.7s ease-out both;
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes frameReveal {
+            from { opacity: 0; transform: translate(8px, 8px); }
+            to { opacity: 1; transform: translate(0, 0); }
+        }
 
-        /* ========== CONTAINER ========== */
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
-        .section { padding: 6rem 0; }
-        .section-title {
-            font-size: 2.5rem;
-            font-weight: 800;
-            letter-spacing: -0.02em;
-            margin-bottom: 3rem;
+        /* ========== SECTIONS ========== */
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+        .section { padding: 6.5rem 0; }
+        .section.alt { background: var(--bg-section); }
+        .section-label {
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent-soft);
+            font-weight: 500;
+            margin-bottom: 0.75rem;
         }
-        .section-title .num {
-            color: var(--accent);
-            font-family: var(--font-mono);
-            font-size: 1rem;
-            margin-right: 0.75rem;
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.2rem, 4vw, 3rem);
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            margin-bottom: 3rem;
+            color: var(--text);
         }
 
         /* ========== SOBRE ========== */
         .sobre .layout {
             display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 4rem;
+            grid-template-columns: 1.3fr 0.7fr;
+            gap: 4.5rem;
             align-items: start;
         }
-        .sobre-text h3 { font-size: 1.5rem; margin-bottom: 1rem; }
-        .sobre-text p { color: var(--text-muted); margin-bottom: 1rem; }
-        .sobre-text .highlight { color: var(--accent); }
+        .sobre-text h3 {
+            font-family: var(--font-display);
+            font-size: 1.65rem;
+            font-weight: 500;
+            margin-bottom: 1.25rem;
+        }
+        .sobre-text p {
+            color: var(--text-muted);
+            margin-bottom: 1.15rem;
+            max-width: 52ch;
+        }
+        .sobre-text .highlight {
+            color: var(--accent);
+            font-weight: 500;
+        }
         .sobre-meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-            margin-top: 2rem;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0;
+            margin-top: 2.5rem;
+            border-top: 1px solid var(--line);
         }
         .meta-item {
-            padding: 0.75rem 1.25rem;
-            background: var(--bg-card);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 8px;
+            padding: 1.5rem 2rem 0;
+            border-right: 1px solid var(--line);
         }
-        .meta-item strong { color: var(--accent); display: block; font-size: 0.85rem; margin-bottom: 0.25rem; }
-        .sobre-code {
-            background: var(--bg-card);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 12px;
-            padding: 1.5rem;
-            font-family: var(--font-mono);
-            font-size: 0.9rem;
-            overflow-x: auto;
+        .meta-item:first-child { padding-left: 0; }
+        .meta-item:last-child { border-right: none; padding-right: 0; }
+        .meta-item strong {
+            color: var(--accent);
+            display: block;
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
         }
-        .sobre-code .kw { color: var(--accent-secondary); }
-        .sobre-code .str { color: var(--accent); }
-        .sobre-code .prop { color: #ff79c6; }
-        .sobre-visual {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            align-items: center;
+        .meta-item span { color: var(--text-muted); font-size: 0.95rem; }
+        .sobre-aside {
+            padding-top: 0.5rem;
         }
-        .sobre-visual .sobre-code { width: 100%; }
-        .sobre-photo {
-            position: relative;
-            margin-top: 3.5rem;
-            animation: float 4s ease-in-out infinite;
+        .sobre-aside blockquote {
+            font-family: var(--font-display);
+            font-size: 1.45rem;
+            font-style: italic;
+            font-weight: 400;
+            line-height: 1.45;
+            color: var(--accent);
+            border-left: 2px solid var(--line);
+            padding-left: 1.5rem;
         }
-        .sobre-photo::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 220px;
-            height: 220px;
-            transform: translate(-50%, -50%);
-            background: radial-gradient(circle, rgba(0,245,212,0.25) 0%, rgba(123,44,191,0.15) 40%, transparent 70%);
-            border-radius: 50%;
-            z-index: -1;
-            animation: pulseGlow 3s ease-in-out infinite;
-        }
-        .sobre-photo::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 280px;
-            height: 280px;
-            transform: translate(-50%, -50%);
-            border: 1px solid rgba(0,245,212,0.2);
-            border-radius: 50%;
-            z-index: -2;
-            animation: orbitRing 8s linear infinite;
-        }
-        .sobre-photo .photo-glow {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 200px;
-            height: 200px;
-            transform: translate(-50%, -50%);
-            background: conic-gradient(from 0deg, transparent, rgba(0,245,212,0.3), transparent, rgba(157,78,221,0.3), transparent);
-            border-radius: 50%;
-            z-index: -3;
-            animation: spinGlow 6s linear infinite;
-            filter: blur(25px);
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-12px); }
-        }
-        @keyframes pulseGlow {
-            0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
-            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
-        }
-        @keyframes orbitRing {
-            0% { transform: translate(-50%, -50%) rotate(0deg); opacity: 0.4; }
-            50% { opacity: 0.8; }
-            100% { transform: translate(-50%, -50%) rotate(360deg); opacity: 0.4; }
-        }
-        @keyframes spinGlow {
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-        .sobre-photo img,
-        .sobre-photo-fallback {
-            position: relative;
-            z-index: 1;
-            width: 160px;
-            height: 160px;
-            border-radius: 50%;
-            object-fit: cover;
-            box-shadow: 0 0 0 4px rgba(0,245,212,0.5),
-                        0 0 0 8px rgba(123,44,191,0.3),
-                        0 4px 24px rgba(0,0,0,0.4),
-                        inset 0 1px 0 rgba(255,255,255,0.15);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .sobre-photo img:hover,
-        .sobre-photo-fallback:hover {
-            transform: scale(1.02);
-            box-shadow: 0 0 0 4px rgba(0,245,212,0.6),
-                        0 0 0 10px rgba(123,44,191,0.2),
-                        0 8px 32px rgba(0,0,0,0.4),
-                        0 0 40px rgba(0,245,212,0.2);
-        }
-        .sobre-photo-fallback {
-            display: none;
-            background: linear-gradient(135deg, var(--accent-secondary), var(--accent-tertiary));
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: rgba(255,255,255,0.9);
-        }
-        .reveal { opacity: 0; transform: translateY(40px); }
 
         /* ========== HABILIDADES ========== */
         .skills-layout {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
+            gap: 0;
+            border-top: 1px solid var(--line);
         }
-        .skill-card {
-            background: var(--bg-card);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 16px;
+        .skill-item {
             padding: 2rem;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.4s ease;
+            border-bottom: 1px solid var(--line);
+            border-right: 1px solid var(--line);
             opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
         }
-        .skill-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.4s ease;
+        .skill-item:first-child { padding-left: 0; }
+        .skill-item:nth-child(3n) { border-right: none; padding-right: 0; }
+        .skill-item.visible { opacity: 1; transform: translateY(0); }
+        .skill-item h4 {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            font-weight: 500;
+            margin-bottom: 0.65rem;
+            color: var(--text);
         }
-        .skill-card:hover {
-            border-color: rgba(0, 245, 212, 0.2);
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        .skill-list {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
         }
-        .skill-card:hover::before { transform: scaleX(1); }
-        .skill-icon { font-size: 2rem; color: var(--accent); margin-bottom: 1rem; display: block; }
-        .skill-card h4 { font-size: 1.1rem; margin-bottom: 0.75rem; }
-        .skill-list { color: var(--text-muted); font-size: 0.9rem; line-height: 1.8; }
-        .skill-bar-wrap { margin-top: 1rem; }
-        .skill-bar { height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden; margin-top: 0.5rem; }
-        .skill-bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
-            border-radius: 3px;
-            width: 0;
-            transition: width 1s ease-out;
+        .skill-level {
+            display: block;
+            font-size: 0.7rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent-soft);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
         }
-        .skill-card.visible .skill-bar-fill { width: var(--level, 80%); }
 
         /* ========== EXPERIÊNCIA ========== */
         .exp-layout {
             display: flex;
             flex-direction: column;
-            gap: 2rem;
+            gap: 0;
+            border-top: 1px solid var(--line);
         }
         .exp-item {
             display: grid;
-            grid-template-columns: 200px 1fr;
-            gap: 2rem;
-            padding: 2rem;
-            background: var(--bg-card);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 16px;
-            transition: all 0.3s;
+            grid-template-columns: 180px 1fr;
+            gap: 2.5rem;
+            padding: 2.25rem 0;
+            border-bottom: 1px solid var(--line);
             opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
         }
-        .exp-item:hover { border-color: rgba(0, 245, 212, 0.15); }
-        .exp-date { color: var(--accent); font-family: var(--font-mono); font-size: 0.9rem; }
-        .exp-role { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.25rem; }
-        .exp-company { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.75rem; }
-        .exp-desc { color: var(--text-muted); font-size: 0.95rem; }
+        .exp-item.visible { opacity: 1; transform: translateY(0); }
+        .exp-date {
+            color: var(--accent);
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-weight: 600;
+            padding-top: 0.35rem;
+        }
+        .exp-role {
+            font-family: var(--font-display);
+            font-size: 1.45rem;
+            font-weight: 500;
+            margin-bottom: 0.3rem;
+        }
+        .exp-company {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 0.75rem;
+        }
+        .exp-desc {
+            color: var(--text-muted);
+            font-size: 1rem;
+            max-width: 58ch;
+        }
 
         /* ========== CONTATO ========== */
         .contato .inner {
-            max-width: 600px;
-            text-align: center;
+            max-width: 640px;
         }
         .contato-lead {
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             color: var(--text-muted);
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
             line-height: 1.8;
+            max-width: 42ch;
         }
         .contato-links {
             display: flex;
-            flex-wrap: nowrap;
-            justify-content: center;
-            gap: 1rem;
+            flex-wrap: wrap;
+            gap: 0;
+            border-top: 1px solid var(--line);
         }
         .contato-links a {
-            display: inline-flex;
+            display: flex;
             align-items: center;
-            gap: 0.5rem;
-            padding: 1rem 1.5rem;
-            white-space: nowrap;
-            background: var(--bg-card);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 12px;
+            justify-content: space-between;
+            gap: 1.5rem;
+            flex: 1;
+            min-width: 180px;
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--line);
+            border-right: 1px solid var(--line);
             color: var(--text);
             text-decoration: none;
             font-weight: 500;
-            transition: all 0.3s;
+            font-size: 0.95rem;
+            transition: color 0.25s, padding-left 0.25s;
         }
+        .contato-links a:first-child { padding-left: 0; }
+        .contato-links a:last-child { border-right: none; padding-right: 0; }
         .contato-links a:hover {
-            border-color: var(--accent);
             color: var(--accent);
-            transform: translateY(-4px);
-            box-shadow: 0 10px 30px rgba(0, 245, 212, 0.15);
         }
-        .contato-links a span.arrow { font-size: 1.2rem; }
+        .contato-links a:first-child:hover {
+            padding-left: 0.5rem;
+        }
+        .contato-links a:not(:first-child):hover {
+            padding-left: 2.5rem;
+        }
+        .contato-links a .arrow {
+            font-size: 1rem;
+            color: var(--text-muted);
+            transition: transform 0.25s, color 0.25s;
+        }
+        .contato-links a:hover .arrow {
+            color: var(--accent);
+            transform: translate(3px, -3px);
+        }
+        .contato-links a .label {
+            font-size: 0.7rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            display: block;
+            margin-bottom: 0.25rem;
+            font-weight: 600;
+        }
 
         /* ========== FOOTER ========== */
         .footer {
-            padding: 2rem;
+            padding: 2.75rem 2rem;
             text-align: center;
             color: var(--text-muted);
             font-size: 0.9rem;
-            border-top: 1px solid rgba(255,255,255,0.06);
+            border-top: 1px solid var(--line);
+            background: var(--bg-soft);
         }
-        .footer .heart { color: var(--accent); }
-        .footer-thanks { font-size: 1rem; margin-bottom: 0.5rem; }
-        .footer-counter { font-size: 0.85rem; color: var(--text-muted); margin-top: 0.75rem; }
-        .footer-counter span { color: var(--accent); font-family: var(--font-mono); }
+        .footer-thanks {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-style: italic;
+            color: var(--text);
+            margin-bottom: 0.65rem;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
         /* ========== RESPONSIVO ========== */
         .nav-links.open {
             display: flex !important;
             position: fixed;
-            top: 70px; left: 0; right: 0;
+            top: 68px; left: 0; right: 0;
             flex-direction: column;
-            padding: 2rem;
-            background: var(--bg-elevated);
-            border-bottom: 1px solid rgba(255,255,255,0.08);
+            padding: 1.75rem 2rem;
+            background: var(--bg);
+            border-bottom: 1px solid var(--line);
+            gap: 1.25rem;
         }
         @media (max-width: 968px) {
+            .nav { padding: 1.15rem 1.75rem; }
             .nav-links { display: none; }
             .nav-toggle { display: flex; }
-            .hero { padding: 6rem 2rem 4rem; }
-            .hero-content { text-align: center; }
-            .sobre .layout { grid-template-columns: 1fr; }
+            .hero {
+                grid-template-columns: 1fr;
+                padding: 7rem 1.75rem 4rem;
+                text-align: center;
+            }
+            .hero-content { max-width: 100%; margin: 0 auto; }
+            .hero-desc { margin-left: auto; margin-right: auto; }
+            .hero-cta { justify-content: center; }
+            .hero-visual { order: -1; margin-bottom: 1rem; }
+            .hero-photo { width: min(260px, 70%); }
+            .hero-photo::after { inset: 0.85rem -0.85rem -0.85rem 0.85rem; }
+            .sobre .layout { grid-template-columns: 1fr; gap: 2.5rem; }
+            .sobre-meta { grid-template-columns: 1fr; }
+            .meta-item {
+                border-right: none;
+                border-bottom: 1px solid var(--line);
+                padding: 1.25rem 0;
+            }
+            .meta-item:first-child { padding-top: 1.25rem; }
+            .meta-item:last-child { border-bottom: none; padding-bottom: 0; }
             .skills-layout { grid-template-columns: 1fr; }
-            .exp-item { grid-template-columns: 1fr; }
+            .skill-item {
+                border-right: none;
+                padding: 1.75rem 0;
+            }
+            .skill-item:first-child { padding-left: 0; }
+            .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+            .contato-links a {
+                border-right: none;
+                padding: 1.35rem 0;
+            }
+            .contato-links a:first-child { padding-left: 0; }
+            .contato-links a:last-child { padding-right: 0; }
         }
         @media (max-width: 600px) {
-            .nav { padding: 1rem 1.5rem; }
-            .hero { padding: 5rem 1.5rem 3rem; }
-            .hero-cta { flex-direction: column; }
+            .nav { padding: 1rem 1.25rem; }
+            .hero { padding: 6rem 1.25rem 3.5rem; }
+            .hero-cta { flex-direction: column; align-items: stretch; }
             .btn { text-align: center; }
-            .contato-links { flex-wrap: wrap; }
+            .section { padding: 4.5rem 0; }
+            .container { padding: 0 1.25rem; }
         }
     </style>
 </head>
 <body>
-    <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
-    <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
-    <nav class="nav">
-        <a href="#hero" class="nav-logo">RL<span>W</span></a>
+    <nav class="nav" id="nav">
+        <a href="#hero" class="nav-logo">Rafael Lumertz <span>Webber</span></a>
         <ul class="nav-links">
             <li><a href="#sobre">Sobre</a></li>
             <li><a href="#habilidades">Habilidades</a></li>
@@ -558,110 +577,103 @@
     </nav>
 
     <section id="hero" class="hero">
-        <div class="hero-bg">
-            <div class="hero-gradient"></div>
-            <canvas class="particles-canvas" id="particles"></canvas>
-            <div class="hero-grid"></div>
-        </div>
         <div class="hero-content">
-            <div class="hero-text">
-                <p class="hero-welcome">Bem-vindo ao meu portfólio! 👋</p>
-                <div class="hero-badge">Disponível para projetos</div>
-                <h1 class="hero-title">
-                    Rafael Lumertz<span class="typewriter" id="typewriter"></span>
-                </h1>
-                <p class="hero-subtitle">Estudante de Engenharia da Computação | Dev na Anttecipe</p>
-                <p class="hero-desc">
-                    Foco em <span style="color: var(--accent);">Python</span>, 
-                    <span style="color: var(--accent-secondary);">Inteligência Artificial</span> e 
-                    <span style="color: var(--accent-tertiary);">Robótica</span>. 
-                    Construindo sistemas, automações e soluções tecnológicas em Criciúma/SC.
-                </p>
-                <div class="hero-cta">
-                    <a href="#contato" class="btn btn-primary">Entrar em Contato</a>
-                    <a href="#habilidades" class="btn btn-outline">Ver Stack</a>
-                </div>
+            <p class="hero-welcome">Bem-vindo ao meu portfólio</p>
+            <h1 class="hero-title">Rafael Lumertz <em>Webber</em></h1>
+            <p class="hero-subtitle">Engenharia da Computação · Desenvolvedor na Anttecipe</p>
+            <p class="hero-desc">
+                Atuação em Python,
+                com foco em sistemas, automações e soluções tecnológicas em Criciúma/SC.
+            </p>
+            <div class="hero-cta">
+                <a href="#contato" class="btn btn-primary">Entrar em contato</a>
+                <a href="#experiencia" class="btn btn-outline">Ver trajetória</a>
             </div>
         </div>
-        <div class="scroll-hint">Scroll</div>
+        <div class="hero-visual">
+            <div class="hero-photo">
+                <img src="./assets/rafael.jpeg" alt="Rafael Lumertz Webber" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                <div class="hero-photo-fallback">RLW</div>
+            </div>
+        </div>
     </section>
 
-    <section id="sobre" class="section sobre">
+    <section id="sobre" class="section alt">
         <div class="container">
-            <h2 class="section-title"><span class="num">01</span>Sobre Mim</h2>
+            <p class="section-label">01 — Apresentação</p>
+            <h2 class="section-title">Sobre mim</h2>
             <div class="layout sobre-layout">
                 <div class="sobre-text reveal">
-                    <h3>Quem sou eu</h3>
+                    <h3>Perfil profissional</h3>
                     <p>
-                        Estudante de <span class="highlight">Engenharia da Computação</span> e desenvolvedor na 
-                        <span class="highlight">Anttecipe</span>, empresa de TI especializada em sistemas, 
-                        automações e soluções tecnológicas. Baseado em <strong>Criciúma/SC</strong>, 
-                        dedico-me a unir teoria acadêmica e prática profissional.
+                        Estudante de <span class="highlight">Engenharia da Computação</span> e desenvolvedor na
+                        <span class="highlight">Anttecipe</span>, empresa financeira com foco em compra de precatórios.
+                        Atuo no desenvolvimento de sistemas e automações, unindo formação acadêmica
+                        e prática profissional em <strong>Criciúma/SC</strong>.
                     </p>
                     <p>
-                        Meu foco atual está em <strong>Python</strong>, <strong>Inteligência Artificial</strong> 
-                        e <strong>Robótica</strong>, áreas que me impulsionam a criar soluções inovadoras 
-                        e impactantes.
+                        Meu foco técnico está em <strong>Python</strong>, <strong>inteligência artificial</strong>
+                        e <strong>robótica</strong> — áreas que orientam meu aprendizado e a entrega
+                        de soluções consistentes.
+                    </p>
+                    <p>
+                        Natural do Rio Grande do Sul, valorizo o esporte e o contato com pessoas.
+                        Pratico futebol com algumas medalhas em campeonatos amadores e corrida,
+                        com pódios e experiências de até 30&nbsp;km. Também sou fã de jogos online,
+                        que complementam meu interesse por tecnologia e desafios.
                     </p>
                     <div class="sobre-meta">
-                        <div class="meta-item"><strong>Localização</strong>Criciúma, Santa Catarina</div>
-                        <div class="meta-item"><strong>Área</strong>TI | Sistemas & Automações</div>
-                        <div class="meta-item"><strong>Foco</strong>Python · IA · Robótica</div>
+                        <div class="meta-item">
+                            <strong>Localização</strong>
+                            <span>Criciúma, Santa Catarina</span>
+                        </div>
+                        <div class="meta-item">
+                            <strong>Área</strong>
+                            <span>TI · Sistemas e Automações</span>
+                        </div>
+                        <div class="meta-item">
+                            <strong>Foco</strong>
+                            <span>Python · IA · Robótica</span>
+                        </div>
                     </div>
                 </div>
-                <div class="sobre-visual">
-                    <div class="sobre-code reveal">
-<pre><span class="kw">const</span> rafael = {
-  <span class="prop">stack</span>: [<span class="str">"Python"</span>, <span class="str">"SQL"</span>, <span class="str">"JS"</span>],
-  <span class="prop">empresa</span>: <span class="str">"Anttecipe"</span>,
-  <span class="prop">foco</span>: [<span class="str">"IA"</span>, <span class="str">"Robótica"</span>],
-};</pre>
-                    </div>
-                    <div class="sobre-photo reveal">
-                        <div class="photo-glow" aria-hidden="true"></div>
-                        <img src="./assets/rafael.png" alt="Rafael Lumertz Webber" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex'">
-                        <div class="sobre-photo-fallback">RLW</div>
-                    </div>
-                </div>
+                <aside class="sobre-aside reveal">
+                    <blockquote>
+                        Unindo rigor técnico, disciplina esportiva e curiosidade por soluções que geram impacto real.
+                    </blockquote>
+                </aside>
             </div>
         </div>
     </section>
 
-    <section id="habilidades" class="section habilidades">
+    <section id="habilidades" class="section">
         <div class="container">
-            <h2 class="section-title"><span class="num">02</span>Habilidades</h2>
+            <p class="section-label">02 — Competências</p>
+            <h2 class="section-title">Habilidades</h2>
             <div class="skills-layout">
-                <div class="skill-card" data-level="95">
-                    <span class="skill-icon">🐍</span>
-                    <h4>Forte</h4>
+                <div class="skill-item">
+                    <span class="skill-level">Avançado</span>
+                    <h4>Python e lógica</h4>
                     <p class="skill-list">Python · Lógica de programação · Raciocínio algorítmico</p>
-                    <div class="skill-bar-wrap">
-                        <div class="skill-bar"><div class="skill-bar-fill" style="--level: 95%"></div></div>
-                    </div>
                 </div>
-                <div class="skill-card" data-level="70">
-                    <span class="skill-icon">⚡</span>
-                    <h4>Intermediário</h4>
+                <div class="skill-item">
+                    <span class="skill-level">Básico</span>
+                    <h4>Linguagens e mobile</h4>
                     <p class="skill-list">JavaScript · Java · C++ · React Native</p>
-                    <div class="skill-bar-wrap">
-                        <div class="skill-bar"><div class="skill-bar-fill" style="--level: 70%"></div></div>
-                    </div>
                 </div>
-                <div class="skill-card" data-level="90">
-                    <span class="skill-icon">🗄️</span>
-                    <h4>Banco de Dados</h4>
-                    <p class="skill-list">SQL sólido · MySQL (diário) · PostgreSQL (básico)</p>
-                    <div class="skill-bar-wrap">
-                        <div class="skill-bar"><div class="skill-bar-fill" style="--level: 90%"></div></div>
-                    </div>
+                <div class="skill-item">
+                    <span class="skill-level">Sólido</span>
+                    <h4>Banco de dados</h4>
+                    <p class="skill-list">SQL · MySQL (uso diário) · PostgreSQL (básico)</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="experiencia" class="section experiencia">
+    <section id="experiencia" class="section alt">
         <div class="container">
-            <h2 class="section-title"><span class="num">03</span>Experiência</h2>
+            <p class="section-label">03 — Trajetória</p>
+            <h2 class="section-title">Experiência</h2>
             <div class="exp-layout">
                 <div class="exp-item reveal">
                     <div class="exp-date">Atual</div>
@@ -669,8 +681,8 @@
                         <div class="exp-role">Desenvolvedor</div>
                         <div class="exp-company">Anttecipe — TI, Sistemas e Automações</div>
                         <p class="exp-desc">
-                            Desenvolvimento de sistemas, automações e soluções tecnológicas. 
-                            Atuação em projetos que demandam Python, SQL e integrações.
+                            Dês de agosto de 2025 desenvolvendo sistemas, automações e soluções tecnológicas.
+                            Atuando em projetos com Python, SQL e integrações.
                         </p>
                     </div>
                 </div>
@@ -678,10 +690,23 @@
                     <div class="exp-date">Em formação</div>
                     <div>
                         <div class="exp-role">Engenharia da Computação</div>
-                        <div class="exp-company">Estudante</div>
+                        <div class="exp-company">Graduação em andamento</div>
                         <p class="exp-desc">
-                            Graduação em andamento com foco em fundamentos de computação, 
-                            programação, inteligência artificial e robótica.
+                            Formação com ênfase em fundamentos de computação, programação,
+                            inteligência artificial e robótica.
+                        </p>
+                    </div>
+                </div>
+                <div class="exp-item reveal">
+                    <div class="exp-date">Dos 13 anos a 2025</div>
+                    <div>
+                        <div class="exp-role">Trabalho braçal</div>
+                        <div class="exp-company">Agricultura e construção</div>
+                        <p class="exp-desc">
+                            Atuação em serviços braçais entre a agricultura e a construção,
+                            desde os 13 anos até 2025. Dessa trajetória, consolidei
+                            responsabilidade, paciência e determinação.
+                            Competências que levo para o ambiente profissional.
                         </p>
                     </div>
                 </div>
@@ -689,174 +714,74 @@
         </div>
     </section>
 
-    <section id="contato" class="section contato">
+    <section id="contato" class="section">
         <div class="container">
-            <h2 class="section-title"><span class="num">04</span>Contato</h2>
+            <p class="section-label">04 — Contato</p>
+            <h2 class="section-title">Vamos conversar</h2>
             <div class="inner">
                 <p class="contato-lead">
-                    Projetos, oportunidades ou uma conversa sobre tecnologia? 
-                    Estou aberto a conectar.
+                    Projetos, oportunidades ou uma conversa sobre tecnologia.
+                    Estou disponível para contato.
                 </p>
                 <div class="contato-links">
-                    <a href="mailto:rafael.webber09@gmail.com"><span>📧 rafael.webber09@gmail.com</span><span class="arrow">↗</span></a>
-                    <a href="https://www.linkedin.com/in/rafael-lumertz-webber-0707612bb/" target="_blank" rel="noopener"><span>💼 LinkedIn</span><span class="arrow">↗</span></a>
-                    <a href="https://github.com/rafaelwebber" target="_blank" rel="noopener"><span>🐙 GitHub</span><span class="arrow">↗</span></a>
+                    <a href="mailto:rafael.webber09@gmail.com">
+                        <span>
+                            <span class="label">E-mail</span>
+                            rafael.webber09@gmail.com
+                        </span>
+                        <span class="arrow" aria-hidden="true">↗</span>
+                    </a>
+                    <a href="https://www.linkedin.com/in/rafael-lumertz-webber-0707612bb/" target="_blank" rel="noopener">
+                        <span>
+                            <span class="label">Rede</span>
+                            LinkedIn
+                        </span>
+                        <span class="arrow" aria-hidden="true">↗</span>
+                    </a>
+                    <a href="https://github.com/rafaelwebber" target="_blank" rel="noopener">
+                        <span>
+                            <span class="label">Código</span>
+                            GitHub
+                        </span>
+                        <span class="arrow" aria-hidden="true">↗</span>
+                    </a>
                 </div>
             </div>
         </div>
     </section>
 
     <footer class="footer">
-        <p class="footer-thanks">Obrigado pela visita! 🙏</p>
-        <p>© 2026 Rafael Lumertz Webber. Feito com <span class="heart">♥</span> e café.</p>
-        <p class="footer-counter">Visitas: <span id="visitCount">...</span></p>
+        <p class="footer-thanks">Obrigado pela visita.</p>
+        <p>© 2026 Rafael Lumertz Webber</p>
     </footer>
 
     <script>
-        // ========== PARTICLES ==========
-        const canvas = document.getElementById('particles');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
+        // Nav shadow on scroll
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 40);
+        }, { passive: true });
 
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            initParticles();
-        }
-
-        function initParticles() {
-            particles = [];
-            const count = Math.min(80, Math.floor((canvas.width * canvas.height) / 15000));
-            for (let i = 0; i < count; i++) {
-                particles.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    r: Math.random() * 2 + 0.5,
-                    vx: (Math.random() - 0.5) * 0.5,
-                    vy: (Math.random() - 0.5) * 0.5,
-                });
-            }
-        }
-
-        function drawParticles() {
-            if (!ctx) return;
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.x += p.vx;
-                p.y += p.vy;
-                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(0, 245, 212, 0.4)';
-                ctx.fill();
-            });
-        }
-
-        function animateParticles() {
-            drawParticles();
-            requestAnimationFrame(animateParticles);
-        }
-
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
-        animateParticles();
-
-        // ========== CURSOR SUAVE ==========
-        const cursorGlow = document.getElementById('cursorGlow');
-        const cursorDot = document.getElementById('cursorDot');
-        let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
-        let glowX = mouseX, glowY = mouseY;
-
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            cursorGlow.style.opacity = '1';
-            cursorDot.style.opacity = '1';
-        });
-
-        document.querySelectorAll('a, button').forEach(el => {
-            el.addEventListener('mouseenter', () => cursorDot.classList.add('hover'));
-            el.addEventListener('mouseleave', () => cursorDot.classList.remove('hover'));
-        });
-
-        function lerp(start, end, factor) { return start + (end - start) * factor; }
-        function animateCursor() {
-            glowX = lerp(glowX, mouseX, 0.08);
-            glowY = lerp(glowY, mouseY, 0.08);
-            if (cursorGlow) {
-                cursorGlow.style.left = glowX + 'px';
-                cursorGlow.style.top = glowY + 'px';
-            }
-            if (cursorDot) {
-                cursorDot.style.left = mouseX + 'px';
-                cursorDot.style.top = mouseY + 'px';
-            }
-            requestAnimationFrame(animateCursor);
-        }
-        animateCursor();
-
-        // ========== TYPEWRITER (velocidade mais lenta) ==========
-        const phrases = [' Webber', ' | Dev', ' | Python', ' | IA'];
-        let phraseIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
-        const el = document.getElementById('typewriter');
-
-        function typewriter() {
-            const current = phrases[phraseIndex];
-            if (isDeleting) {
-                el.textContent = current.substring(0, charIndex - 1);
-                charIndex--;
-                if (charIndex === 0) {
-                    isDeleting = false;
-                    phraseIndex = (phraseIndex + 1) % phrases.length;
-                    setTimeout(typewriter, 800);
-                    return;
-                }
-            } else {
-                el.textContent = current.substring(0, charIndex + 1);
-                charIndex++;
-                if (charIndex === current.length) {
-                    isDeleting = true;
-                    setTimeout(typewriter, 2200);
-                    return;
-                }
-            }
-            const delay = isDeleting ? 80 : 180;
-            setTimeout(typewriter, delay);
-        }
-        setTimeout(typewriter, 1800);
-
-        // ========== SCROLL REVEAL ==========
-        const reveals = document.querySelectorAll('.reveal, .skill-card, .exp-item');
+        // Scroll reveal
+        const reveals = document.querySelectorAll('.reveal, .skill-item, .exp-item');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
                     entry.target.classList.add('visible');
                 }
             });
-        }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
         reveals.forEach(r => observer.observe(r));
 
-        // ========== NAV MOBILE ==========
+        // Mobile nav
         document.querySelector('.nav-toggle').addEventListener('click', () => {
             document.querySelector('.nav-links').classList.toggle('open');
         });
-
-        // ========== CONTADOR DE VISITAS ==========
-        fetch('https://api.countapi.xyz/hit/rafaellwebber/portifolio')
-            .then(res => res.json())
-            .then(data => {
-                const el = document.getElementById('visitCount');
-                if (el) el.textContent = data.value.toLocaleString('pt-BR');
-            })
-            .catch(() => {
-                const el = document.getElementById('visitCount');
-                if (el) el.textContent = '—';
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.nav-links').classList.remove('open');
             });
+        });
     </script>
 </body>
 </html>
